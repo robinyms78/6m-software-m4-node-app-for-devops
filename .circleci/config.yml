@@ -31,11 +31,21 @@ jobs:
       - image: cimg/node:16.10
     steps:
       - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
       - run:
-          name: Build and push Docker image
+          name: Build Docker image
           command: |
-            echo "Building and pushing Docker image..."
+            echo "Build Docker image..."
             docker build -t robinyms101/node-app-for-devops:latest .
+      - run:
+          name: Login to Docker Hub
+          command: |
+            echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USER" --password-stdin
+      - run:
+          name: Push Docker Image
+          command: |
+            echo "Push Docker image..."
             docker push robinyms101/node-app-for-devops:latest
 workflows:
   build-and-test:
