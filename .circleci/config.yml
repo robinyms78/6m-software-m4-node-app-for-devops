@@ -41,5 +41,9 @@ workflows:
   build-and-test:
     jobs:
       - build
-      - test
-      - publish
+      - test:
+          requires:
+            - build
+      - publish:
+          requires:
+            - test
