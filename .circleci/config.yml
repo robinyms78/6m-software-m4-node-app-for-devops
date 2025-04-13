@@ -35,8 +35,8 @@ jobs:
           name: Build and push Docker image
           command: |
             echo "Building and pushing Docker image..."
-            docker build -t my-image:latest .
-            docker push my-image:latest
+            docker build -t robinyms101/node-app-for-devops:latest .
+            docker push robinyms101/node-app-for-devops:latest
 workflows:
   build-and-test:
     jobs:
