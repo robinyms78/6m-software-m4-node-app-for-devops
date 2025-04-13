@@ -26,8 +26,20 @@ jobs:
           command: |
             echo "Running tests..."
             npm run test
+  publish:
+    docker:
+      - image: cimg/node:16.10
+    steps:
+      - checkout
+      - run:
+          name: Build and push Docker image
+          command: |
+            echo "Building and pushing Docker image..."
+            docker build -t my-image:latest .
+            docker push my-image:latest
 workflows:
   build-and-test:
     jobs:
       - build
       - test
+      - publish
