@@ -49,7 +49,7 @@ jobs:
             docker push robinyms101/node-app-for-devops:latest
 
 workflows:
-  simple_workflow:
+  build-and-push:
     jobs:
       - build
       - test:
