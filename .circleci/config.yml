@@ -27,7 +27,15 @@ jobs:
           npm run test
 
 workflows:
-  simple_workflow:
+  version: 2
+  scheduled_workflow:
+    triggers:
+      - schedule:
+          cron: "0 * * * *"
+          filters:
+            branches:
+              only:
+                - main
     jobs:
       - build
       - test:
