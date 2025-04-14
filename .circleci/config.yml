@@ -1,7 +1,8 @@
 version: 2.1
 
 orbs:
-  node: circleci/node@5.0.1
+  node: circleci/node@5
+  docker: circleci/docker@2.1.4
 
 jobs:
   build:
@@ -11,9 +12,11 @@ jobs:
       - checkout
       - node/install-packages:
           pkg-manager: npm
-      - run: |
-          echo "Installing dependencies..."
-          npm install
+      - run:
+          name: Install dependencies
+          command: |
+            echo "Installing dependencies..."
+            npm install
 
   test:
     docker:
@@ -22,14 +25,40 @@ jobs:
       - checkout
       - node/install-packages:
           pkg-manager: npm
-      - run: |
-          echo "Running tests..."
-          npm run test
+      - run:
+          name: Run tests
+          command: |
+            echo "Running tests..."
+            npm run test
+
+  publish:
+    docker:
+      - image: cimg/node:16.10
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Build Docker image
+          command: |
+            echo "Build Docker image..."
+            docker build -t robinyms101/node-app-for-devops:latest .
+      - run:
+          name: Login to Docker Hub
+          command: |
+            echo "$DOCKERHUB_PASSWORD" | docker login --username "$DOCKERHUB_USERNAME" --password-stdin
+      - run:
+          name: Push Docker Image
+          command: |
+            echo "Push Docker image..."
+            docker push robinyms101/node-app-for-devops:latest
 
 workflows:
-  simple_workflow:
+  build-and-push:
     jobs:
       - build
       - test:
           requires:
             - build
+      - publish:
+          requires:
+            - test
