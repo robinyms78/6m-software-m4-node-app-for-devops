@@ -1,6 +1,9 @@
 version: 2.1
+
 orbs:
   node: circleci/node@5
+  docker: circleci/docker@2.1.4
+
 jobs:
   build:
     docker:
@@ -14,6 +17,7 @@ jobs:
           command: |
             echo "Installing dependencies..."
             npm install
+
   test:
     docker:
       - image: cimg/node:16.10
@@ -26,13 +30,13 @@ jobs:
           command: |
             echo "Running tests..."
             npm run test
+
   publish:
     docker:
       - image: cimg/node:16.10
     steps:
       - checkout
-      - setup_remote_docker:
-          docker_layer_caching: true
+      - setup_remote_docker
       - run:
           name: Build Docker image
           command: |
@@ -47,6 +51,7 @@ jobs:
           command: |
             echo "Push Docker image..."
             docker push robinyms101/node-app-for-devops:latest
+
 workflows:
   build-and-test:
     jobs:
