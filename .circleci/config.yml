@@ -29,11 +29,11 @@ jobs:
           npm run test
 
   publish:
-    executor: docker/docker
+    docker:
+      - image: cimg/node:16.10
     steps:
-      - setup_remote_docker
       - checkout
-      - docker/check
+      - setup_remote_docker
       - run:
           name: Build Docker image
           command: |
@@ -74,6 +74,6 @@ workflows:
       - publish:
           requires:
             - test
-      - deploy:
-          requires:
-            - publish
+      # - deploy:
+      #     requires:
+      #       - publish
