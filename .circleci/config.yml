@@ -36,6 +36,10 @@ jobs:
       - docker/check
       - docker/build:
           image: robinyms101/node-app-for-devops
+      - run:
+          name: Login to Docker Hub
+          command: |
+            echo "$DOCKERHUB_PASSWORD" | docker login --username "$DOCKERHUB_USERNAME" --password-stdin
       - docker/push:
           image: robinyms101/node-app-for-devops
 
