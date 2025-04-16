@@ -21,9 +21,4 @@ app.post('/user', (req, res) => {
     res.json({ message: `Received user ${name} with email ${email}`});
 });
 
-// This is the only function that will be called by the endpoint.
-app.get((req, res) => {
-    res.send("Hello world!");
-});
-
 module.exports = app;
