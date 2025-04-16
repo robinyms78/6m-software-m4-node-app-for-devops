@@ -55,7 +55,7 @@ jobs:
             heroku container:release web -a robin-su-devops
 
 workflows:
-  simple_workflow:
+  build-and-deploy:
     jobs:
       - build
       - test:
