@@ -1,3 +1,5 @@
+const request = require('supertest');
+const app = require('./app');
 const targetFn = require("./controller");
 
 describe("the print function", () => {
