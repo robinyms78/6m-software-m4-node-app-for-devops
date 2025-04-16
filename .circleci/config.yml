@@ -40,8 +40,6 @@ jobs:
           image: robinyms101/node-app-for-devops
       - docker/push:
           image: robinyms101/node-app-for-devops
-          tag: latest
-          registry: docker.io
 
   deploy:
     docker:
