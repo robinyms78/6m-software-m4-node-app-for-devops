@@ -3,6 +3,7 @@ version: 2.1
 orbs:
   node: circleci/node@5.0.1
   docker: circleci/docker@2.1.4
+  heroku: circleci/heroku@2.0.0
 
 jobs:
   build:
@@ -28,28 +29,33 @@ jobs:
           npm run test
 
   publish:
+    executor: docker/docker
+    steps:
+      - setup_remote_docker
+      - checkout
+      - docker/check
+      - docker/build:
+          image: robinyms101/node-app-for-devops
+      - docker/push:
+          image: robinyms101/node-app-for-devops
+
+  deploy:
     docker:
       - image: cimg/node:16.10
     steps:
-      - checkout
       - setup_remote_docker
+      - heroku/install
+      - checkout
       - run:
-          name: Build Docker image
+          name: Heroku Container Push
           command: |
-            echo "Build Docker image..."
-            docker build -t robinyms101/node-app-for-devops:latest .
-      - run:
-          name: Login to Docker Hub
-          command: |
-            echo "$DOCKERHUB_PASSWORD" | docker login --username "$DOCKERHUB_USERNAME" --password-stdin
-      - run:
-          name: Push Docker Image
-          command: |
-            echo "Push Docker image..."
-            docker push robinyms101/node-app-for-devops:latest
+            heroku container:login
+            heroku stack:set container -a robin-su-devops
+            heroku container:push web -a robin-su-devops
+            heroku container:release web -a robin-su-devops
 
 workflows:
-  build-and-push:
+  simple_workflow:
     jobs:
       - build
       - test:
@@ -58,3 +64,6 @@ workflows:
       - publish:
           requires:
             - test
+      - deploy:
+          requires:
+            - publish
