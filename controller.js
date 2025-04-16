@@ -2,8 +2,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
-
 app.use(bodyParser.json());
 
 // GET /home
@@ -24,13 +22,8 @@ app.post('/user', (req, res) => {
 });
 
 // This is the only function that will be called by the endpoint.
-function print(req, res){
+app.get((req, res) => {
     res.send("Hello world!");
-}
-
-module.exports = print;
-
-// Start server
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
 });
+
+module.exports = app;
