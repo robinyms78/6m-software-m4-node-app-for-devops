@@ -57,15 +57,36 @@ jobs:
             heroku container:release web -a robin-su-devops
 
 workflows:
-  build-and-deploy:
+  ci-cd-pipeline:
     jobs:
-      - build
+      - build:
+          filters:
+            branches:
+              only:
+                - main
+                - release
+
       - test:
           requires:
             - build
+          filters:
+            branches:
+              only:
+                - main
+                - release
+
       - publish:
           requires:
             - test
+          filters:
+            branches:
+              only:
+                - release
+
       - deploy:
           requires:
             - publish
+          filters:
+            branches:
+              only:
+                - release
