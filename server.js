@@ -1,4 +1,7 @@
-const app = require('./app');
+// JavaScript for server
+// server.js
+
+const app = require('./controller');
 
 const PORT = process.env.PORT || 3000;
 
