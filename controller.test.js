@@ -1,5 +1,5 @@
 const request = require('supertest');
-const app = require('./app');
+const app = require('./controller');
 
 describe("the print function", () => {
     it('should respond with "This is the home page"', async () => {
