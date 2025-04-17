@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const app = express();
 app.use(bodyParser.json());
 
-// GET /homeuse
+// GET /home
 app.get('/home', (req, res) => {
     res.send('This is the home page');
 });
