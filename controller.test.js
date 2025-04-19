@@ -2,7 +2,7 @@
 // controller.test.js
 
 const os = require('os');
-const machineInfo = os.machine;
+const machineInfo = os.arch();
 
 const request = require('supertest');
 const app = require('./controller');
