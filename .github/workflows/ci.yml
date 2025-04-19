@@ -60,4 +60,4 @@ jobs:
           with:
             context: .
             push: true
-            tags: huai99/education-space:latest # Tags the Docker image
+            tags: robinyms101/node-app-for-devops:latest # Tags the Docker image
