@@ -53,9 +53,9 @@ jobs:
           name: Heroku Container Push
           command: |
             heroku container:login
-            heroku stack:set container -a robin-su-devops
-            heroku container:push web -a robin-su-devops
-            heroku container:release web -a robin-su-devops
+            heroku stack:set container -a robinyms-su-devops
+            heroku container:push web -a robinyms-su-devops
+            heroku container:release web -a robinyms-su-devops
 
 workflows:
   ci-cd-pipeline:
